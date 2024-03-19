@@ -25,15 +25,31 @@ void data_task(void *p) {
 
 void process_task(void *p) {
     int data = 0;
+    int movingAverageBuffer[5] = {0}; // pq é 5
+    int bufferIndex = 0;
+    int sum = 0;
+    int count = 0;
 
     while (true) {
-        if (xQueueReceive(xQueueData, &data, 100)) {
-            // implementar filtro aqui!
+        if (xQueueReceive(xQueueData, &data, portMAX_DELAY)) {
+            // Subtrai o valor antigo e adiciona o novo valor à soma
+            sum -= movingAverageBuffer[bufferIndex];
+            sum += data;
 
+            // Armazena o novo valor no buffer
+            movingAverageBuffer[bufferIndex] = data;
+            bufferIndex = (bufferIndex + 1) % 5;
 
+            // Incrementa o contador até atingir o tamanho da janela
+            count = (count < 5) ? count + 1 : 5;
 
+            // Calcula a média móvel
+            int average = (count > 0) ? (sum / count) : 0;
 
-            // deixar esse delay!
+            // Imprime o valor médio
+            printf("Filtered Value: %d\n", average);
+
+            // Deixar esse delay!
             vTaskDelay(pdMS_TO_TICKS(50));
         }
     }
