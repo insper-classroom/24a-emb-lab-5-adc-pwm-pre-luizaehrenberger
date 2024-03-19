@@ -51,7 +51,6 @@ void adc_2_task(void *p) {
     }
 }
 
-
 int main() {
     stdio_init_all();
     printf("Start RTOS \n");
