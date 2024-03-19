@@ -27,7 +27,7 @@ void adc_1_task(void *p) {
 
         adc_select_input(0);
         result = adc_read();
-        printf("voltage 1: %f V\n", result * conversion_factor);
+        printf("voltage 2: %f V\n", result * conversion_factor);
 
         vTaskDelay(pdMS_TO_TICKS(200));
     }
@@ -41,18 +41,16 @@ void adc_2_task(void *p) {
     const float conversion_factor = 3.3f / (1 << 12);
 
     uint16_t result; 
-    while (1) {
-        adc_select_input(0); // Select ADC input 0 (GPIO26)
+    while (1) {       // CÓDIGO AQUI
+
+        adc_select_input(0);
         result = adc_read();
-        printf("voltage 1: %f V\n", result * conversion_factor);
-
-        // CÓDIGO AQUI
-
-
+        printf("voltage 2: %f V\n", result * conversion_factor);
 
         vTaskDelay(pdMS_TO_TICKS(200));
     }
 }
+
 
 int main() {
     stdio_init_all();
@@ -60,6 +58,7 @@ int main() {
     adc_init();
 
     xTaskCreate(adc_1_task, "LED_Task 1", 4095, NULL, 1, NULL);
+    xTaskCreate(adc_2_task, "LED_Task 2", 4095, NULL, 1, NULL);
     vTaskStartScheduler();
 
     while (true) {
