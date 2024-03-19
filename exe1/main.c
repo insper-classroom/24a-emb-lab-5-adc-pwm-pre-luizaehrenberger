@@ -23,12 +23,6 @@ void adc_1_task(void *p) {
         result = adc_read();
         printf("voltage 1: %f V\n", result * conversion_factor);
 
-        // CÓDIGO AQUI
-
-        adc_select_input(0);
-        result = adc_read();
-        printf("voltage 2: %f V\n", result * conversion_factor);
-
         vTaskDelay(pdMS_TO_TICKS(200));
     }
 }
