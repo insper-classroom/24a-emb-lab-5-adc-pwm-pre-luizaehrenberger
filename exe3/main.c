@@ -9,7 +9,7 @@
 #include "data.h"
 QueueHandle_t xQueueData;
 
-#define WINDOW_SIZE 5
+#define WINDOW_SIZE z
 
 // não mexer! Alimenta a fila com os dados do sinal
 void data_task(void *p) {

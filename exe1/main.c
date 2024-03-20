@@ -19,12 +19,10 @@ void adc_1_task(void *p) {
 
     while (1) {
         adc_select_input(1); // Selecionar ADC input 1 (GPIO27)
-        vTaskDelay(pdMS_TO_TICKS(5)); // Atraso para estabilização
         result = adc_read();
         printf("Voltage 1: %f V\n", result * conversion_factor);
 
-        adc_select_input(0); // Selecionar ADC input 0 (GPIO26)
-        vTaskDelay(pdMS_TO_TICKS(5)); // Atraso para estabilização
+        adc_select_input(0); // Selecionar ADC input 0 (GPIO26) // Atraso para estabilização
         result = adc_read();
         printf("Voltage 2: %f V\n", result * conversion_factor);
 
