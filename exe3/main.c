@@ -26,10 +26,12 @@ void data_task(void *p) {
 }
 
 void process_task(void *p) {
+    int data = 0;
+    int cont = 0;
     int vetor[5];
 
     while (true) {
-        if (xQueueReceive(xQueueData, &data, portMAX_DELAY)) {
+        if (xQueueReceive(xQueueData, &data, 100)) {
             vetor[0]=vetor[1];
             vetor[1]=vetor[2];
             vetor[2]=vetor[3];
