@@ -9,8 +9,6 @@
 #include "data.h"
 QueueHandle_t xQueueData;
 
-#define WINDOW_SIZE = 5;
-
 // não mexer! Alimenta a fila com os dados do sinal
 void data_task(void *p) {
     vTaskDelay(pdMS_TO_TICKS(400));
@@ -39,7 +37,7 @@ void process_task(void *p) {
             vetor[4]=data;
 
             int media=((vetor[4]+vetor[3]+vetor[2]+vetor[1]+vetor[0])/5);
-
+            printf("%d\n",media);
             // Manter o delay conforme especificado
             vTaskDelay(pdMS_TO_TICKS(50));
         }
