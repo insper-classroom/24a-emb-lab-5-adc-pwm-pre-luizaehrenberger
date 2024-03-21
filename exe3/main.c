@@ -9,7 +9,7 @@
 #include "data.h"
 QueueHandle_t xQueueData;
 
-#define WINDOW_SIZE z
+#define WINDOW_SIZE = 5;
 
 // não mexer! Alimenta a fila com os dados do sinal
 void data_task(void *p) {
@@ -26,34 +26,17 @@ void data_task(void *p) {
 }
 
 void process_task(void *p) {
-    int data = 0;
-    int buffer[WINDOW_SIZE] = {0};
-    int bufferIndex = 0;
-    int total = 0; // Vamos usar total ao invés de sum para evitar confusão com a função sum()
-    int count = 0;
+    int vetor[5];
 
     while (true) {
         if (xQueueReceive(xQueueData, &data, portMAX_DELAY)) {
-            // Remove o valor mais antigo do total
-            total -= buffer[bufferIndex];
+            vetor[0]=vetor[1];
+            vetor[1]=vetor[2];
+            vetor[2]=vetor[3];
+            vetor[3]=vetor[4];
+            vetor[4]=data;
 
-            // Adiciona o novo valor ao buffer e ao total
-            buffer[bufferIndex] = data;
-            total += data;
-
-            // Atualiza o índice para o próximo valor do buffer
-            bufferIndex = (bufferIndex + 1) % WINDOW_SIZE;
-
-            // Aumenta o contador até atingir o tamanho da janela
-            if (count < WINDOW_SIZE) {
-                count++;
-            }
-
-            // Calcula a média móvel
-            int average = total / count;
-
-            // Imprime o valor médio
-            printf("Filtered Value: %d\n", average);
+            int media=((vetor[4]+vetor[3]+vetor[2]+vetor[1]+vetor[0])/5);
 
             // Manter o delay conforme especificado
             vTaskDelay(pdMS_TO_TICKS(50));
